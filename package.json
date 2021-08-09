@@ -3,7 +3,8 @@
   "scripts": {
     "build": "yarn workspace tongpo-core build",
     "docs:dev": "yarn workspace tongpo-docs dev",
-    "docs:build": "yarn workspace tongpo-docs build"
+    "docs:build": "yarn workspace tongpo-docs build",
+    "example:dev": "yarn workspace tongpo-example dev"
   },
   "workspaces": [
     "packages/*"
