@@ -10,6 +10,7 @@ function renderSidebar(dir) {
 }
 
 module.exports = {
+  base: '/tongpo/',
   title: '乐天工具库',
   theme: 'reco',
   themeConfig: {
@@ -28,7 +29,8 @@ module.exports = {
         ['file', '文件'],
         ['url', 'URL'],
         ['map', '地图'],
-        ['broadcast-channel', '窗口通信']
+        ['broadcast-channel', '窗口通信'],
+        ['datetime', '日期时间']
       ]
     }
   }

@@ -22,3 +22,24 @@ getWeeks(beginDate, endDate, isSundayBegin)
 getWeeks('2021-07-09', '2021-08-09')
 ```
 
+## 获取秒数
+
+```js
+getSeconds(time)
+```
+
+根据时间秒数获取总秒数
+
+**参数**
+1. time(String): 时间，如"01:20:30"
+
+**返回值**
+
+(Number): 秒数
+
+**例子**
+
+```js
+getSeconds('01:20:30')
+// => 4830
+```
