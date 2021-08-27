@@ -1,14 +1,4 @@
-const typeRules = {
-  // 图片
-  image: {
-    png: [
-      'image/png',
-      'application/x-png'
-    ],
-    gif: ['image/gif'],
-    tif: ['image/tiff'],
-    jpeg: ['image/jpeg']
-  },
+const typeEnums = {
   // 文档
   document: {
     doc: [
@@ -43,14 +33,12 @@ const typeRules = {
   },
   // 压缩包
   zip: {
-    zip: ['application/x-zip-compressed'],
-    rar: ['application/octet-stream']
-  },
-  // 文本
-  text: {
-    txt: ['text/plain'],
-    html: ['text/html'],
-    xml: ['text/xml']
+    zip: [
+      'application/x-zip-compressed',
+      'application/zip',
+      'multipart/x-zip'
+    ],
+    rar: ['application/x-rar-compressed']
   },
   // 可执行文件
   app: {
@@ -65,23 +53,19 @@ const typeRules = {
  */
 export function getType(contentType) {
   if (!contentType) return null
-  if (['image', 'video', 'audio'].some(type => new RegExp(`^${type}\\/`).test(contentType))) {
+  if (['image', 'video', 'audio', 'text'].some(type => new RegExp(`^${type}\\/`).test(contentType))) {
     const parts = contentType.split('/')
-    return {
-      top: parts[0],
-      sub: parts[1]
-    }
+    return { top: parts[0], sub: parts[1] }
   }
   let type = null
-  Object.keys(typeRules).forEach(top => {
-    const sub = Object.keys(typeRules[top]).find(key =>
-      typeRules[top][key].indexOf(contentType) >= 0)
+  const keys = Object.keys(typeEnums)
+  for (let i = 0, len = keys.length; i < len; i++) {
+    const top = keys[i]
+    const sub = Object.keys(typeEnums[top]).find(key =>
+      typeEnums[top][key].indexOf(contentType) >= 0)
     if (sub) {
-      type = {
-        top,
-        sub
-      }
+      return { top, sub }
     }
-  })
+  }
   return type
 }

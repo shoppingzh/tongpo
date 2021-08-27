@@ -1,5 +1,4 @@
 src
-docs
 .babelrc
 .gitignore
 rollup.config.js
