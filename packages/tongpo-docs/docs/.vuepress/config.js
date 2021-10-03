@@ -1,37 +1,32 @@
-const { readFiles } = require('./util')
-
-function renderSidebar(dir) {
-  const files = readFiles(dir)
-  return files.map(file => {
-    const fileName = file.name
-    const name = fileName.substring(0, fileName.lastIndexOf('.'))
-    return [fileName, name]
-  })
-}
+const { generateNav, generateSidebar } = require('vuepress-util')
+const { navs } = require('../../config.js')
 
 module.exports = {
-  base: '/tongpo/',
   title: '乐天工具库',
+  description: '竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。',
+
+  // 性能相关
+  cache: false,
+
+  // 浏览器兼容
+  evergreen: true, // 只适配现代浏览器
+
+  // 插件
+  plugins: {
+    '@vuepress/medium-zoom': {
+      selector: 'img'
+    }
+  },
+
+  // 主题
   theme: 'reco',
   themeConfig: {
-    displayAllHeaders: true,
-    subSidebar: 'auto', // 主题特有配置：二级以上的菜单放置在右侧
-    sidebarDepth: 2,
-    nav: [{
-      text: '快速上手',
-      link: '/guide/'
-    }, {
-      text: '文档',
-      link: '/doc/file'
-    }],
-    sidebar: {
-      '/doc/': [
-        ['file', '文件'],
-        ['url', 'URL'],
-        ['map', '地图'],
-        ['broadcast-channel', '窗口通信'],
-        ['datetime', '日期时间']
-      ]
-    }
+    logo: '/logo.png',
+    lastUpdated: '最后更新时间',
+    mode: 'dark',
+    modePicker: false,
+    // 导航栏
+    nav: generateNav(navs),
+    sidebar: generateSidebar()
   }
 }

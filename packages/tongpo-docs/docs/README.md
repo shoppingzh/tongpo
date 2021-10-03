@@ -1,8 +1,7 @@
 ---
 home: true
 heroText: 乐天工具库
-heroImage: /hero.png
-tagline: 竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。
-actionText: 出发
-actionLink: /
+heroImage: /logo.png
+actionText: 现在开始 ❤
+actionLink: /1分钟入门
 ---
