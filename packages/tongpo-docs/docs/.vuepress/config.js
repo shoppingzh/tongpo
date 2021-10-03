@@ -13,9 +13,7 @@ module.exports = {
 
   // 插件
   plugins: {
-    '@vuepress/medium-zoom': {
-      selector: 'img'
-    }
+    '@vuepress/medium-zoom': {}
   },
 
   // 主题
@@ -23,8 +21,10 @@ module.exports = {
   themeConfig: {
     logo: '/logo.png',
     lastUpdated: '最后更新时间',
+    // reco
     mode: 'dark',
     modePicker: false,
+    subSidebar: 'auto',
     // 导航栏
     nav: generateNav(navs),
     sidebar: generateSidebar()

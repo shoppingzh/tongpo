@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "yarn workspace tongpo-core build",
+    "build": "yarn workspace tongpo build",
     "docs:dev": "yarn workspace tongpo-docs dev",
     "docs:build": "yarn workspace tongpo-docs build",
     "example:dev": "yarn workspace tongpo-example dev"
