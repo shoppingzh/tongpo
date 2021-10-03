@@ -2,6 +2,11 @@ const { generateNav, generateSidebar } = require('vuepress-util')
 const { navs } = require('../../config.js')
 
 module.exports = {
+  base: process.env.NODE_ENV === 'production' ? '/tongpo/' : '/',
+  head: [
+    ['link', { rel: 'icon', href: '/logo.png' }]
+  ],
+
   title: '乐天工具库',
   description: '竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。',
 
@@ -22,7 +27,7 @@ module.exports = {
     logo: '/logo.png',
     lastUpdated: '最后更新时间',
     // reco
-    mode: 'dark',
+    mode: 'light',
     modePicker: false,
     subSidebar: 'auto',
     // 导航栏
