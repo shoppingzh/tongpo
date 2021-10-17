@@ -33,5 +33,8 @@ module.exports = [{
   output: {
     dir: 'lib',
     format: 'es'
+  },
+  watch: {
+    include: 'src/**'
   }
 }]

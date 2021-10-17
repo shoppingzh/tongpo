@@ -19,5 +19,9 @@ export default [{
     path: 'url',
     component: view('url.vue'),
     meta: { menu: true, title: 'URL' }
+  }, {
+    path: 'dom',
+    component: view('dom.vue'),
+    meta: { menu: true, title: 'DOM' }
   }]
 }]

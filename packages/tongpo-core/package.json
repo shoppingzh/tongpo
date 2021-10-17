@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c ./rollup.config.js"
+    "build": "rollup --watch -c ./rollup.config.js"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",

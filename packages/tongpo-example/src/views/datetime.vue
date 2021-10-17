@@ -36,7 +36,7 @@
 
 <script>
 import { computed, ref } from 'vue'
-import { getWeeks, getSeconds } from 'tongpo-core/src/datetime'
+import { getWeeks, getSeconds } from 'tongpo/lib/datetime'
 
 export default {
   setup() {

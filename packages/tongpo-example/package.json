@@ -7,9 +7,10 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@babel/runtime-corejs2": "^7.15.4",
     "less": "^4.1.1",
     "moment": "^2.29.1",
-    "tongpo": "^0.0.1",
+    "tongpo": "^0.0.2",
     "vue": "^3.0.5",
     "vue-router": "4"
   },

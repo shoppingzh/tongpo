@@ -1,3 +1,5 @@
+import { start } from './internal/timer'
+
 
 /**
  * 选择文件
@@ -140,4 +142,50 @@ export function css(el, styles = {}) {
   Object.keys(styles).forEach(name => {
     el.style[name] = styles[name]
   })
+}
+
+
+/**
+ * 
+ * @param {Function} cb 回调函数
+ * @returns {Function}取消事件绑定函数
+ */
+export function onVisibilityChange(cb) {
+  const handler = () => {
+    const state = document.visibilityState
+    cb && cb(state === 'visible')
+  }
+  document.addEventListener('visibilitychange', handler)
+  return () => {
+    document.removeEventListener('visibilitychange', handler)
+  }
+}
+
+export function detectAction(actionCallback, unactionCallback, delay) {
+  if (delay <= 0) throw new Error('delay must great than 0!')
+  let lastActionTime = +new Date()
+  const delayTime = delay * 1000
+  const stopTimer = start(() => {
+    const currentTime = +new Date()
+    // 如果当前时间与上次操作的时间差大于了最大值，则说明没有操作
+    if (currentTime - lastActionTime >= delayTime) {
+      unactionCallback && unactionCallback()
+    }
+  }, 1000)
+  // 发生操作时将回调此函数
+  const actionHandler = () => {
+    lastActionTime = +new Date()
+    actionCallback && actionCallback()
+  }
+  
+  // 操作类型
+  window.addEventListener('mousemove', actionHandler)
+  window.addEventListener('keypress', actionHandler)
+  window.addEventListener('click', actionHandler)
+  return () => {
+    window.removeEventListener('mouseleave', actionHandler)
+    window.removeEventListener('keypress', actionHandler)
+    window.removeEventListener('click', actionHandler)
+    stopTimer()
+  }
 }
