@@ -13,7 +13,7 @@
   "devDependencies": {
     "@vuepress/plugin-medium-zoom": "^1.8.2",
     "vuepress": "^1.8.2",
-    "vuepress-util": "^0.0.2"
+    "vuepress-util": "0.0.10"
   },
   "dependencies": {
     "vuepress-theme-reco": "1.5.7"

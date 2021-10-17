@@ -177,3 +177,57 @@ css(el, {
 })
 ```
 
+## 检测页面可见性
+
+```js
+onVisibilityChange(cb)
+```
+
+**参数**
+
+1. cb((visible: boolean) => any): 回调函数
+
+**返回值**
+
+(destroy: () => any): 资源回收，销毁事件监听
+
+**例子**
+
+```js
+const destroy = onVisibilityChange(visible => {
+  if (visible) console.log('page visible')
+  else console.log('page hidden')
+})
+
+// 适当的时机，回收资源
+destroy()
+```
+
+## 检测页面操作
+
+```js
+detectAction(actionCallback, unactionCallback, delay)
+```
+
+**参数**
+
+1. actionCallback(() => any): 在等待时间内发生操作时的回调
+2. unactionCallback(() => any): 在等待时间内没有发生操作时的回调
+3. delay(number): 等待时间，单位：秒
+
+**返回值**
+
+(destroy: () => any): 资源回收，销毁事件监听
+
+**例子**
+
+```js
+const destroy = detectAction(() => {
+  console.log('action')
+}, () => {
+  console.log('un action')
+}, 3)
+
+// 在适当时间回收资源
+destroy()
+```

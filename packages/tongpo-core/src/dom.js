@@ -161,6 +161,13 @@ export function onVisibilityChange(cb) {
   }
 }
 
+/**
+ * 检测页面操作
+ * @param {Function} actionCallback 操作时回调
+ * @param {Function} unactionCallback 无操作时回调
+ * @param {Number} delay 间隔时间，单位为秒
+ * @returns 
+ */
 export function detectAction(actionCallback, unactionCallback, delay) {
   if (delay <= 0) throw new Error('delay must great than 0!')
   let lastActionTime = +new Date()
