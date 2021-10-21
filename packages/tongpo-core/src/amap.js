@@ -51,3 +51,53 @@ export function getAddress(lng, lat) {
     }
   })
 }
+
+/**
+ * 获取当前位置
+ * lat 纬度
+ * lng 经度
+ * country 国家
+ * province 省份
+ * city 城市
+ * cityCode 城市编码
+ * district 区
+ * street 街道
+ * streetNumber 街道号
+ * adcode 邮政编码
+ * @returns 
+ */
+export function getLocation() {
+  return new Promise(async(resolve, reject) => {
+    try {
+      const AMap = await getAMap()
+      AMap.plugin('AMap.Geolocation', () => {
+        const geolocation = new AMap.Geolocation({
+          enableHighAccuracy: true,
+          GeoLocationFirst: true
+        })
+        geolocation.getCurrentPosition((status, result) => {
+          if (status === 'complete') {
+            const data = {}
+            data.lat = result.position.lat
+            data.lng = result.position.lng
+            const addr = result.addressComponent
+            if (addr) {
+              data.country = addr.country
+              data.province = addr.province
+              data.city = addr.city
+              data.cityCode = addr.citycode
+              data.district = addr.district
+              data.street = addr.street
+              data.streetNumber = addr.streetNumber
+              data.adcode = addr.adcode
+            }
+            return resolve(data)
+          }
+          return reject()
+        })
+      })
+    } catch (err) {
+      reject(err)
+    }
+  })
+}

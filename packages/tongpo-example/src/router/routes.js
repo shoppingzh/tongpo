@@ -23,5 +23,9 @@ export default [{
     path: 'dom',
     component: view('dom.vue'),
     meta: { menu: true, title: 'DOM' }
+  }, {
+    path: 'map',
+    component: view('map.vue'),
+    meta: { menu: true, title: '地图' }
   }]
 }]
