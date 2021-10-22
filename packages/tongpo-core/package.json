@@ -1,6 +1,6 @@
 {
   "name": "tongpo",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -14,5 +14,8 @@
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^19.0.0",
     "@rollup/plugin-node-resolve": "^13.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   }
 }

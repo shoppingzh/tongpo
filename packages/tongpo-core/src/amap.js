@@ -76,26 +76,42 @@ export function getLocation() {
           GeoLocationFirst: true
         })
         geolocation.getCurrentPosition((status, result) => {
-          if (status === 'complete') {
-            const data = {}
-            data.lat = result.position.lat
-            data.lng = result.position.lng
-            const addr = result.addressComponent
-            if (addr) {
-              data.country = addr.country
-              data.province = addr.province
-              data.city = addr.city
-              data.cityCode = addr.citycode
-              data.district = addr.district
-              data.street = addr.street
-              data.streetNumber = addr.streetNumber
-              data.adcode = addr.adcode
-            }
-            return resolve(data)
+          if (status !== 'complete') return reject()
+          const data = {}
+          data.lat = result.position.lat
+          data.lng = result.position.lng
+          const addr = result.addressComponent
+          if (addr) {
+            data.country = addr.country
+            data.province = addr.province
+            data.city = addr.city
+            data.cityCode = addr.citycode
+            data.district = addr.district
+            data.street = addr.street
+            data.streetNumber = addr.streetNumber
+            data.adcode = addr.adcode
           }
-          return reject()
+          data.address = result.formattedAddress
+          resolve(data)
         })
       })
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
+
+/**
+ * 计算亮点间的距离
+ * Point: { lng: number, lat: number }
+ * @param {Point} p1 点1
+ * @param {Point} p2 点2
+ */
+export function getDistance(p1, p2) {
+  return new Promise(async(resolve, reject) => {
+    try {
+      const AMap = await getAMap()
+      resolve(AMap.GeometryUtil.distance([p1.lng, p1.lat], [p2.lng, p2.lat]))
     } catch (err) {
       reject(err)
     }

@@ -24,11 +24,31 @@
         {{ parseAddr }}
       </div>
     </Example>
+
+    <Example title="计算两点间的距离">
+      <h3>点1</h3>
+      <div>
+        <input v-model="p1.lng" placeholder="点1经度" />
+        <input v-model="p1.lat" placeholder="点1纬度" />
+      </div>
+      <h3>点2</h3>
+      <div>
+        <input v-model="p2.lng" placeholder="点2经度" />
+        <input v-model="p2.lat" placeholder="点2纬度" />
+      </div>
+      <div>
+        <button @click="handleParseDis">计算距离</button>
+      </div>
+      <div>
+        两点距离：{{ dis }}米
+      </div>
+    </Example>
+
   </div>
 </template>
 
 <script>
-import { init, getAMap, getLocation, getAddress } from 'tongpo/lib/amap'
+import { init, getAMap, getLocation, getAddress, getDistance } from 'tongpo/lib/amap'
 import { reactive, ref } from 'vue'
 export default {
   setup() {
@@ -58,13 +78,31 @@ export default {
       parseAddr.value = addr
     }
 
+    const p1 = reactive({
+      lng: null,
+      lat: null
+    })
+    const p2 = reactive({
+      lng: null,
+      lat: null
+    })
+    const dis = ref(0)
+    const handleParseDis = async() => {
+      dis.value = await getDistance(p1, p2)
+    }
+
     return {
       loc,
       handleGetLocation,
       
       parse,
       parseAddr,
-      handleParse
+      handleParse,
+
+      p1,
+      p2,
+      dis,
+      handleParseDis
     }
   }
 }
