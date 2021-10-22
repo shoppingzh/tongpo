@@ -27,3 +27,28 @@ export function parseQueryParams(object) {
 export function join() {
   return [...arguments].join('/').replace(/\/{2,}/g, '/')
 }
+
+/**
+ * 解析URL
+ * protocol 协议
+ * host 主机
+ * pathname 路径
+ * query 查询条件
+ * hash hash
+ * @param {Sring} url URL
+ */
+export function parse(url) {
+  if (!url) return null
+  const urlRE = new RegExp(/^((\w+):\/\/)([\w.-]*)?:?(\d+)?([^?]*)?\??(([^#])*)?#?(.*)?$/)
+  const result = urlRE.exec(url)
+  if (!result) return null
+  return {
+    protocol: result[1],
+    host: result[3],
+    port: result[4],
+    pathname: result[5],
+    query: result[6],
+    hash: result[8]
+  }
+}
+
