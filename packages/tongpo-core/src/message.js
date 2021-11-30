@@ -1,6 +1,7 @@
-import SockJS from 'sockjs-client'
-import Stomp from 'stompjs'
+import SockJS from 'sockjs-client/dist/sockjs.min.js'
+import { Stomp } from '@stomp/stompjs'
 import { merge, remove } from 'lodash'
+import Subscribe from './subscribe'
 
 const DEFAULT_BEAT_FREQUENCY = 60000 // 默认心跳节奏
 
@@ -16,31 +17,33 @@ export default class Client {
   constructor(url, options) {
     this.url = url
     this.options = merge({}, DEFAULT_OPTIONS, options)
-    this.init()
-  }
-
-  init() {
     this.channels = []
-    this.sock = new SockJS(this.url)
-    this.stomp = Stomp.over(this.sock)
-    this.stomp.heartbeat = this.options.heartbeat
-    if (!this.options.debug) {
-      this.stomp.debug = null
-    }
+    this.connectSubscribe = new Subscribe()
     this.connect()
   }
 
   connect() {
     return new Promise((resolve, reject) => {
-      if (this.stomp.connected) {
+      if (this.stomp && this.stomp.connected) {
         return resolve(this.stomp)
       }
-      const _this = this
-      this.stomp.connect({}, function() {
-        resolve(_this.stomp)
-      }, function(err) {
-        reject(err)
+      this.stomp = Stomp.over(() => new SockJS(this.url))
+      this.stomp.configure({
+        heartbeatIncoming: this.options.heartbeat.incoming,
+        heartbeatOutgoing: this.options.heartbeat.outgoing,
+        reconnectDelay: 500
       })
+      if (!this.options.debug) {
+        this.stomp.debug = null
+      }
+      this.stomp.onConnect = (frame) => {
+        this.connectSubscribe.dispatch(this.stomp)
+        resolve()
+      }
+      this.stomp.onDisconnect = (frame) => {
+        reject()
+      }
+      this.stomp.activate()
     })
   }
 
@@ -57,6 +60,10 @@ export default class Client {
     }
     return channel
   }
+
+  onConnect(cb) {
+    return this.connectSubscribe.on(cb)
+  }
 }
 
 class Channel {
@@ -64,35 +71,38 @@ class Channel {
     this.client = client
     this.url = url
     this.headers = headers
-    this.handlers = []
+    this.messageSubscribe = new Subscribe()
+    this.channelSubscription = null
 
-    this.client.connect().then((stomp) => {
-      const _this = this
-      this.entity = stomp.subscribe(url, function(frame) {
-        _this.handlers.forEach((handler) => {
-          handler.call(_this, frame)
-        })
+    const subscribe = (stomp) => {
+      const idx = this.client.channels.findIndex(o => o.url === this.url)
+      if (idx < 0) return
+      this.channelSubscription = stomp.subscribe(this.url, (frame) => {
+        this.messageSubscribe.dispatch(frame)
       }, headers)
+    }
+    // 将在ws连接成功后订阅该频道
+    this.client.onConnect(stomp => {
+      subscribe(stomp)
     })
+
+    // 如果已经连接，直接订阅
+    if (this.client.stomp.connected) {
+      subscribe(this.client.stomp)
+    }
   }
 
   /**
    * 添加一个消息处理器，当频道接收到消息时，会通知该处理器
    * @param {Function} handler 消息处理器
    */
-  addMessageHandler(handler) {
-    if (!handler || typeof handler !== 'function') {
-      throw new Error('消息处理器必须是一个函数!')
-    }
-    this.handlers.push(handler)
+  onMessage(handler) {
+    if (!handler || typeof handler !== 'function') throw new Error('消息处理器必须是一个函数!')
+    this.messageSubscribe.on(handler)
   }
 
-  /**
-   * 移除指定的消息处理器
-   * @param {Function} handler 消息处理器
-   */
-  removeMessageHandler(handler) {
-    remove(this.handlers, o => o === handler)
+  addMessageHandler(handler) {
+    return this.onMessage(handler)
   }
 
   /**
@@ -108,10 +118,11 @@ class Channel {
    * 销毁频道
    */
   destroy() {
-    while (this.handlers.shift());
-    if (this.entity) {
-      this.entity.unsubscribe()
+    this.messageSubscribe.destroy()
+    if (this.channelSubscription) {
+      this.channelSubscription.unsubscribe()
     }
-    remove(this.client.channels, o => o.url === this.url)
+    const channelIdx = this.client.channels.findIndex(o => o.url === this.url)
+    channelIdx >= 0 && this.client.channels.splice(channelIdx, 1)
   }
 }

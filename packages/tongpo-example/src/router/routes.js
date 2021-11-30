@@ -27,5 +27,9 @@ export default [{
     path: 'map',
     component: view('map.vue'),
     meta: { menu: true, title: '地图' }
+  }, {
+    path: 'ws',
+    component: view('ws/index.vue'),
+    meta: { menu: true, title: 'WebSocket' }
   }]
 }]

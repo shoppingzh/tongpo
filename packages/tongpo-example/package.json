@@ -9,9 +9,11 @@
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
     "@babel/runtime-corejs2": "^7.15.4",
+    "@stomp/stompjs": "^6.1.2",
     "less": "^4.1.1",
     "moment": "^2.29.1",
-    "tongpo": "^0.0.2",
+    "sockjs-client": "1.4.0",
+    "tongpo": "^0.0.8",
     "vue": "^3.0.5",
     "vue-router": "4"
   },
