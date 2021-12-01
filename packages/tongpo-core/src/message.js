@@ -31,7 +31,7 @@ export default class Client {
       this.stomp.configure({
         heartbeatIncoming: this.options.heartbeat.incoming,
         heartbeatOutgoing: this.options.heartbeat.outgoing,
-        reconnectDelay: 500
+        reconnectDelay: 1000
       })
       if (!this.options.debug) {
         this.stomp.debug = null
@@ -75,14 +75,12 @@ class Channel {
     this.channelSubscription = null
 
     const subscribe = (stomp) => {
-      const idx = this.client.channels.findIndex(o => o.url === this.url)
-      if (idx < 0) return
       this.channelSubscription = stomp.subscribe(this.url, (frame) => {
         this.messageSubscribe.dispatch(frame)
       }, headers)
     }
     // 将在ws连接成功后订阅该频道
-    this.client.onConnect(stomp => {
+    this.offConnectNotify = this.client.onConnect(stomp => {
       subscribe(stomp)
     })
 
@@ -116,6 +114,9 @@ class Channel {
 
   /**
    * 销毁频道
+   * 1. 取消频道订阅
+   * 2. 移除频道
+   * 3. 取消频道对于客户端连接的订阅
    */
   destroy() {
     this.messageSubscribe.destroy()
@@ -124,5 +125,7 @@ class Channel {
     }
     const channelIdx = this.client.channels.findIndex(o => o.url === this.url)
     channelIdx >= 0 && this.client.channels.splice(channelIdx, 1)
+
+    this.offConnectNotify && this.offConnectNotify()
   }
 }
