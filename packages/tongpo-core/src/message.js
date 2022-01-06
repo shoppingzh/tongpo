@@ -1,6 +1,6 @@
 import SockJS from 'sockjs-client/dist/sockjs.min.js'
 import { Stomp } from '@stomp/stompjs'
-import { merge, remove } from 'lodash'
+import { merge } from 'lodash'
 import Subscribe from './subscribe'
 
 const DEFAULT_BEAT_FREQUENCY = 60000 // 默认心跳节奏

@@ -10,7 +10,7 @@ import { Stomp } from '@stomp/stompjs'
 
 export default {
   setup(props, ctx) {
-    const client = new Client('http://192.168.1.43:88/api/endpoint', {
+    const client = new Client('http://192.168.1.43/api/endpoint', {
       debug: true
     })
     const channel = client.openChannel('/topic/classroom/307448102271328256/teach')

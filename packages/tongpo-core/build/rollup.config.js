@@ -1,4 +1,5 @@
 import babel from '@rollup/plugin-babel'
+import { uglify } from 'rollup-plugin-uglify'
 import { getLibInputs } from './util'
 
 module.exports = {
@@ -14,7 +15,17 @@ module.exports = {
     babel({
       exclude: 'node_modules/**',
       babelHelpers: 'runtime'
+    }),
+    uglify({
+      sourcemap: false
     })
   ],
-  external: [/node_modules/]
+  external: [
+    /^@babel\/runtime/,
+    'lodash',
+    'moment',
+    '@amap/amap-jsapi-loader',
+    '@stomp/stompjs',
+    /^sockjs-client/
+  ]
 }

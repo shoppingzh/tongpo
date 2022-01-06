@@ -31,5 +31,9 @@ export default [{
     path: 'ws',
     component: view('ws/index.vue'),
     meta: { menu: true, title: 'WebSocket' }
+  }, {
+    path: 'media',
+    component: view('media/index.vue'),
+    meta: { menu: true, title: '媒体' }
   }]
 }]

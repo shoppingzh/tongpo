@@ -13,7 +13,6 @@
     "less": "^4.1.1",
     "moment": "^2.29.1",
     "sockjs-client": "1.4.0",
-    "tongpo": "^0.0.8",
     "vue": "^3.0.5",
     "vue-router": "4"
   },

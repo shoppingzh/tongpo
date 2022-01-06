@@ -1,4 +1,4 @@
-import { merge } from 'lodash/object'
+import { merge } from 'lodash'
 
 function isTag(el, tagName = '') {
   return el && el.nodeType === 1 && el.tagName === tagName.toUpperCase()
