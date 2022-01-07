@@ -15,36 +15,26 @@
 <script>
 import { onMounted, onUnmounted, ref } from 'vue'
 import { onVisibilityChange, detectAction } from 'tongpo/lib/dom'
+const visible = ref(true)
+const leaveTimes = ref(0)
+onVisibilityChange((val) => {
+  if (!val) leaveTimes.value++
+  setTimeout(() => {
+    visible.value = val
+  }, 300)
+})
 
-export default {
-  setup() {
-    const visible = ref(true)
-    const leaveTimes = ref(0)
-    onVisibilityChange((val) => {
-      if (!val) leaveTimes.value++
-      setTimeout(() => {
-        visible.value = val
-      }, 300)
-    })
+const noAction = ref(false)
+const destroy = detectAction(() => {
+  noAction.value = false
+}, () => {
+  noAction.value = true
+}, 3)
 
-    const noAction = ref(false)
-    const destroy = detectAction(() => {
-      noAction.value = false
-    }, () => {
-      noAction.value = true
-    }, 3)
+onUnmounted(() => {
+  destroy()
+})
 
-    onUnmounted(() => {
-      destroy()
-    })
-    return {
-      visible,
-      leaveTimes,
-      
-      noAction
-    }
-  }
-}
 </script>
 
 <style>

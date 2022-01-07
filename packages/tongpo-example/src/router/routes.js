@@ -35,5 +35,9 @@ export default [{
     path: 'media',
     component: view('media/index.vue'),
     meta: { menu: true, title: '媒体' }
+  }, {
+    path: 'video',
+    component: view('video/index.vue'),
+    meta: { menu: true, title: '视频' }
   }]
 }]
