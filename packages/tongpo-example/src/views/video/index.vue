@@ -1,6 +1,6 @@
 <template>
   <Example title="视频截图">
-    <video ref="video" src="/1.mp4" controls style="background-color: #222; width: 500px; height: 350px; object-fit: contain;" />
+    <video ref="video" src="/1.mp4" controls style="background-color: #222; width: 500px; height: 150px; object-fit: contain;" />
     <div style="margin-top: 10px;">
       <button @click="screenshot">截图</button>
     </div>
