@@ -1,6 +1,0 @@
-src
-.babelrc
-.gitignore
-rollup.config.js
-yarn.lock
-package-lock.json

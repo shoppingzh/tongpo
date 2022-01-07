@@ -3,6 +3,9 @@
   "version": "0.0.13",
   "main": "index.js",
   "license": "MIT",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "build": "rollup --watch -c ./build/rollup.config.js"
   },
