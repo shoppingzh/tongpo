@@ -26,6 +26,10 @@ chooseFile().then(files => {
 })
 ```
 
+<example>
+  <dom-chooseFile />
+</example>
+
 
 ## 转换CSS像素
 
@@ -57,6 +61,10 @@ parseCssPixel('100px')
 // => 100px
 ```
 
+<example>
+  <dom-parseCssPixel />
+</example>
+
 ## 动态创建/更新样式表
 
 ```js
@@ -82,6 +90,11 @@ const style = `
 `
 createOrUpdateStylesheet('custom-style', style)
 ```
+
+<example>
+  <dom-createOrUpdateStylesheet />
+</example>
+
 
 ## 动态加载图片
 

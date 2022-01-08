@@ -12,10 +12,14 @@
   "license": "MIT",
   "devDependencies": {
     "@vuepress/plugin-medium-zoom": "^1.8.2",
-    "vuepress": "^1.8.2",
+    "vuepress": "1.9.5",
     "vuepress-util": "0.0.10"
   },
   "dependencies": {
+    "@babel/runtime-corejs2": "^7.16.7",
+    "@vue/composition-api": "^1.4.3",
+    "ant-design-vue": "^1.7.8",
+    "tongpo": "^0.0.14",
     "vuepress-theme-reco": "1.5.7"
   }
 }
