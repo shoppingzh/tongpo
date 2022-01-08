@@ -1,7 +1,6 @@
 node_modules
-dist
-lib
-
-# package
 yarn.lock
 package-lock.json
+
+# production
+lib
