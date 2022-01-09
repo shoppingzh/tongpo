@@ -29,8 +29,12 @@ export function takeScreenshot(video, type, quality) {
     }
     const ctx = canvas.getContext('2d')
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
-    canvas.toBlob(blob => {
-      resolve(blob)
-    }, null, quality)
+    try {
+      canvas.toBlob(blob => {
+        resolve(blob)
+      }, null, quality)
+    } catch (err) {
+      reject(err)
+    }
   })
 }
