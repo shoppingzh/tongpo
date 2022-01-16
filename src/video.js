@@ -32,7 +32,7 @@ export function takeScreenshot(video, type, quality) {
     try {
       canvas.toBlob(blob => {
         resolve(blob)
-      }, null, quality)
+      }, type, quality)
     } catch (err) {
       reject(err)
     }
