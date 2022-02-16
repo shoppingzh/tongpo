@@ -11,22 +11,37 @@ function getRealSize(video) {
  * @param {HTMLVideoElement} video 视频
  * @param {String} type 图片类型
  * @param {Number} quality 图片质量(0 ~ 1)
+ * @param {Number} width 图片宽度，大于视频宽度时取视频宽度
+ * @param {Number} height 图片高度，大于视频高度时取视频高度，已设置width时，该参数不生效
  */
-export function takeScreenshot(video, type, quality) {
+export function takeScreenshot(video, type, quality, width, height) {
   return new Promise(async(resolve, reject) => {
     if (!video) return reject('video is null')
     const canvas = document.createElement('canvas')
-    const size = { width: video.clientWidth, height: video.clientHeight }
     const realSize = getRealSize(video)
     const realRatio = realSize.width / realSize.height
-    const ratio = size.width / size.height
-    if (realRatio > ratio) { // 横向对齐
-      canvas.width = size.width
-      canvas.height = size.width / realRatio
-    } else { // 纵向对齐
-      canvas.height = size.height
-      canvas.width = size.height * realRatio
+    let w, h
+    if (width > 0 || height > 0) {
+      if (width > 0) {
+        w = Math.min(width, realSize.width)
+        h = w / realRatio
+      } else {
+        h = Math.min(height, realSize.height)
+        w = h * realRatio
+      }
+    } else {
+      const size = { width: video.clientWidth, height: video.clientHeight }
+      const ratio = size.width / size.height
+      if (realRatio > ratio) { // 横向对齐
+        w = size.width
+        h = size.width / realRatio
+      } else { // 纵向对齐
+        h = size.height
+        w = size.height * realRatio
+      }
     }
+    canvas.width = w
+    canvas.height = h
     const ctx = canvas.getContext('2d')
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
     try {
