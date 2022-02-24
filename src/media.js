@@ -35,3 +35,16 @@ export function getUserMedia(constraints) {
   if (!fn) return Promise.reject('浏览器不支持此API')
   return fn(constraints)
 }
+
+/**
+ * 渲染媒体流
+ * @param {HTMLMediaElement} media 媒体对象(video/audio)
+ * @param {MediaStream} stream 媒体流
+ */
+export function render(media, stream) {
+  if ('srcObject' in media) {
+    media.srcObject = stream
+  } else {
+    media.src = URL.createObjectURL(stream)
+  }
+}
