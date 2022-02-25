@@ -1,6 +1,6 @@
 {
   "name": "tongpo",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "main": "index.js",
   "license": "MIT",
   "files": [
@@ -19,7 +19,7 @@
     "@rollup/plugin-commonjs": "^19.0.0",
     "@rollup/plugin-multi-entry": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.0",
-    "rollup-plugin-uglify": "^6.0.4"
+    "rollup-plugin-terser": "^7.0.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"

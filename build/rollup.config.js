@@ -1,5 +1,5 @@
 import babel from '@rollup/plugin-babel'
-import { uglify } from 'rollup-plugin-uglify'
+import { terser } from 'rollup-plugin-terser'
 import { getLibInputs } from './util'
 
 module.exports = {
@@ -16,9 +16,7 @@ module.exports = {
       exclude: 'node_modules/**',
       babelHelpers: 'runtime'
     }),
-    uglify({
-      sourcemap: false
-    })
+    terser()
   ],
   external: [
     /^@babel\/runtime/,
