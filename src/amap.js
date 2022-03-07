@@ -4,6 +4,10 @@
 import AMapLoader from '@amap/amap-jsapi-loader'
 
 let loader = null
+const STATUS = {
+  COMPLETE: 'complete',
+  NO_DATA: 'no_data'
+}
 
 /**
  * 初始化AMap
@@ -39,7 +43,7 @@ export function getAddress(lng, lat) {
       AMap.plugin(['AMap.Geocoder'], () => {
         const geocoder = new AMap.Geocoder({})
         geocoder.getAddress(new AMap.LngLat(lng, lat), (status, result) => {
-          if (status === 'complete' || status === 'no_data') {
+          if (status === STATUS.COMPLETE || status === STATUS.NO_DATA) {
             resolve(result)
           } else {
             reject(result)
@@ -76,7 +80,7 @@ export function getLocation() {
           GeoLocationFirst: true
         })
         geolocation.getCurrentPosition((status, result) => {
-          if (status !== 'complete') return reject()
+          if (status !== STATUS.COMPLETE) return reject()
           const data = {}
           data.lat = result.position.lat
           data.lng = result.position.lng
@@ -112,6 +116,30 @@ export function getDistance(p1, p2) {
     try {
       const AMap = await getAMap()
       resolve(AMap.GeometryUtil.distance([p1.lng, p1.lat], [p2.lng, p2.lat]))
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
+
+/**
+ * 根据IP获取当前的身份城市
+ * @returns 
+ */
+export function getProvinceCity() {
+  return new Promise(async(resolve, reject) => {
+    try {
+      const AMap = await getAMap()
+      AMap.plugin('AMap.CitySearch', () => {
+        const cs = new AMap.CitySearch()
+        cs.getLocalCity((status, result) => {
+          if (status !== STATUS.COMPLETE || result.info !== 'OK') return reject()
+          resolve({
+            province: result.province,
+            city: result.city
+          })
+        })
+      })
     } catch (err) {
       reject(err)
     }
