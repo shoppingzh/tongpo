@@ -43,11 +43,7 @@ export function getAddress(lng, lat) {
       AMap.plugin(['AMap.Geocoder'], () => {
         const geocoder = new AMap.Geocoder({})
         geocoder.getAddress(new AMap.LngLat(lng, lat), (status, result) => {
-          if (status === STATUS.COMPLETE || status === STATUS.NO_DATA) {
-            resolve(result)
-          } else {
-            reject(result)
-          }
+          resolve(status === STATUS.COMPLETE || status === STATUS.NO_DATA ? result : null)
         })
       })
     } catch (error) {
@@ -80,7 +76,7 @@ export function getLocation() {
           GeoLocationFirst: true
         })
         geolocation.getCurrentPosition((status, result) => {
-          if (status !== STATUS.COMPLETE) return reject()
+          if (status !== STATUS.COMPLETE) return resolve(null)
           const data = {}
           data.lat = result.position.lat
           data.lng = result.position.lng
@@ -100,7 +96,7 @@ export function getLocation() {
         })
       })
     } catch (err) {
-      reject(err)
+      reject(null)
     }
   })
 }
@@ -133,7 +129,7 @@ export function getProvinceCity() {
       AMap.plugin('AMap.CitySearch', () => {
         const cs = new AMap.CitySearch()
         cs.getLocalCity((status, result) => {
-          if (status !== STATUS.COMPLETE || result.info !== 'OK') return reject()
+          if (status !== STATUS.COMPLETE || result.info !== 'OK') return resolve(null)
           resolve({
             province: result.province,
             city: result.city
