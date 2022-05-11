@@ -1,6 +1,7 @@
 import babel from '@rollup/plugin-babel'
 import { terser } from 'rollup-plugin-terser'
 import { getLibInputs } from './util'
+import ts from '@rollup/plugin-typescript'
 
 module.exports = {
   input: getLibInputs(),
@@ -12,11 +13,12 @@ module.exports = {
     include: 'src/**'
   },
   plugins: [
+    ts(),
     babel({
       exclude: 'node_modules/**',
       babelHelpers: 'runtime'
     }),
-    terser()
+    // terser()
   ],
   external: [
     /^@babel\/runtime/,

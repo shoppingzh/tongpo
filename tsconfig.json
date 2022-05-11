@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2015", "ESNext"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}

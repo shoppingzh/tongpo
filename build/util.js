@@ -6,7 +6,7 @@ export function getLibInputs() {
   }).reduce((conf, file) => {
     if (file.isDirectory()) return conf
     const filename = file.name
-    if (filename === 'index.js') return conf
+    if (/^index\.(js|ts)$/.test(filename)) return conf
     conf.push(`src/${file.name}`)
     return conf
   }, [])
