@@ -6,6 +6,7 @@
   "files": [
     "lib"
   ],
+  "types": "lib/types",
   "scripts": {
     "dev": "rollup --watch -c ./build/rollup.config.js",
     "build": "rollup -c ./build/rollup.config.js"

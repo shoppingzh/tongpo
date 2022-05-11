@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "lib": ["ES2015", "ESNext"]
+    "lib": ["ES2015", "ESNext"],
+    "declaration": true,
+    "declarationDir": "lib/types"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
