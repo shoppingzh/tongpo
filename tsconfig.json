@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["ES2015", "ESNext"],
+    "lib": ["ES2015", "ESNext", "DOM"],
     "declaration": true,
     "declarationDir": "lib/types",
     "esModuleInterop": true
