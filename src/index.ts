@@ -1,7 +1,3 @@
-/**
- * dascom-util
- */
-
 import * as commandRecord from './command-record'
 import * as dom from './dom'
 import * as filename from './filename'
