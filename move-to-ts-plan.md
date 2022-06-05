@@ -8,11 +8,11 @@
 - [x] file
 - [x] filename
 - [x] math
-- [ ] media
+- [x] media
 - [ ] message
-- [ ] object
+- [x] object
 - [ ] recorder
-- [ ] subscribe
-- [ ] url
-- [ ] validator
+- [x] subscribe
+- [x] url
+- [x] validator
 - [x] video
