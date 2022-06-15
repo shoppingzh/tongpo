@@ -134,13 +134,14 @@ export function on(el, eventName, selector, fn) {
 }
 
 /**
- * 设置样式
- * @param {HTMLElement} el 元素
- * @param {Object} styles 样式对象
+ * 
+ * @param el 元素
+ * @param styles 
  */
-export function css(el, styles = {}) {
-  Object.keys(styles).forEach(name => {
-    el.style[name] = styles[name]
+ export function css(el: HTMLElement, styles: CSSStyleDeclaration) {
+  if (!styles) return
+  Object.keys(styles).forEach(key => {
+    el.style[key] = styles[key]
   })
 }
 
