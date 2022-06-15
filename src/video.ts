@@ -1,4 +1,9 @@
-function getRealSize(video) {
+interface Size {
+  width: number,
+  height: number
+}
+
+function getRealSize(video: HTMLVideoElement): Size {
   if (!video) throw new Error('video is null')
   return {
     width: video.videoWidth,
@@ -8,19 +13,20 @@ function getRealSize(video) {
 
 /**
  * 视频截图
- * @param {HTMLVideoElement} video 视频
- * @param {String} type 图片类型
- * @param {Number} quality 图片质量(0 ~ 1)
- * @param {Number} width 图片宽度，大于视频宽度时取视频宽度
- * @param {Number} height 图片高度，大于视频高度时取视频高度，已设置width时，该参数不生效
+ * @param video 视频
+ * @param type 图片类型
+ * @param quality 图片质量(0 ~ 1)
+ * @param width 图片宽度，大于视频宽度时取视频宽度
+ * @param height 图片高度，大于视频高度时取视频高度，已设置width时，该参数不生效
+ * @returns 
  */
-export function takeScreenshot(video, type, quality, width, height) {
+export function takeScreenshot(video: HTMLVideoElement, type: string, quality: number, width: number, height: number): Promise<Blob> {
   return new Promise(async(resolve, reject) => {
     if (!video) return reject('video is null')
     const canvas = document.createElement('canvas')
     const realSize = getRealSize(video)
     const realRatio = realSize.width / realSize.height
-    let w, h
+    let w: number, h: number
     if (width > 0 || height > 0) {
       if (width > 0) {
         w = Math.min(width, realSize.width)

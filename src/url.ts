@@ -1,9 +1,22 @@
+interface URLParts {
+  protocol: string,
+  host: string,
+  port: string,
+  pathname: string,
+  query: string,
+  hash: string
+}
+
+const URL_RE = /^((\w+):\/\/)([\w.-]*)?:?(\d+)?([^?]*)?\??(([^#])*)?#?(.*)?$/
+
 /**
  * 将对象解析为查询参数
+ * 
  * { name: 'Jack', age: 23 } => name=Jacck&age=23
- * @param {Object} object 对象
+ * @param object 参数对象
+ * @returns 
  */
-export function parseQueryParams(object) {
+export function parseQueryParams(object: object): string {
   if (typeof object !== 'object' || !object) {
     throw new Error('必须传入一个对象')
   }
@@ -24,8 +37,8 @@ export function parseQueryParams(object) {
 /**
  * 路径拼接
  */
-export function join() {
-  return [...arguments].join('/').replace(/\/{2,}/g, '/')
+export function join(...args: string[]) {
+  return [...args].join('/').replace(/\/{2,}/g, '/')
 }
 
 /**
@@ -37,10 +50,9 @@ export function join() {
  * hash hash
  * @param {Sring} url URL
  */
-export function parse(url) {
+export function parse(url: string): URLParts {
   if (!url) return null
-  const urlRE = new RegExp(/^((\w+):\/\/)([\w.-]*)?:?(\d+)?([^?]*)?\??(([^#])*)?#?(.*)?$/)
-  const result = urlRE.exec(url)
+  const result = URL_RE.exec(url)
   if (!result) return null
   return {
     protocol: result[1],

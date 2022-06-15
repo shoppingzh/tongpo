@@ -46,12 +46,17 @@ const typeEnums = {
   }
 }
 
+interface Type {
+  top: string,
+  sub: string
+}
+
 /**
  * 获取文件类型
- * @param {String} contentType 
- * @returns {Object}
+ * @param contentType 文件原始类型
+ * @returns 
  */
-export function getType(contentType) {
+export function getType(contentType: string): Type {
   if (!contentType) return null
   if (['image', 'video', 'audio', 'text'].some(type => new RegExp(`^${type}\\/`).test(contentType))) {
     const parts = contentType.split('/')
